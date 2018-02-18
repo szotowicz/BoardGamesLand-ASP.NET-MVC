@@ -1,0 +1,198 @@
+﻿@using WebApplication.Models;
+@model UserProfile
+
+@{
+    ViewBag.Title = @Model.UserWhomSomeoneVisits.Login;
+    bool isOwner = false;
+    bool isFriend = false;
+}
+
+@if (Session["loggedUser"] != null)
+{
+    SessionControl loggedUser = (SessionControl)HttpContext.Current.Session["loggedUser"];
+    if (@Model.UserWhomSomeoneVisits.Key == loggedUser.Id)
+    {
+        isOwner = true;
+    }
+
+    if (Model.UserFriendsIndex.Contains(loggedUser.Id))
+    {
+        isFriend = true;
+    }
+}
+
+
+<div style="width: 90%; height: 830px; margin: 50px auto;">
+    <div style="width: 20%; border: 1px solid black; float: left; min-width: 150px;">
+        @if (Model.UserWhomSomeoneVisits.Avatar != null &&
+         (
+          (isOwner == true) ||
+          (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("zdjęcie")).RuleLevel == 3) ||
+          (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("zdjęcie")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+          (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("zdjęcie")).RuleLevel == 1 && isFriend)
+         ))
+        {
+            <img src="@Url.Content(Model.UserWhomSomeoneVisits.Avatar)" alt="User avatar" style="width: 100%; height: 80%" />
+        }
+        else
+        {
+            if (Model.UserWhomSomeoneVisits.Sex == "Male")
+            {
+                <img src="@Url.Content("~/Uploads/defaultAvatarMan.png")" alt="User avatar" style="width: 100%; height: 80%" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Uploads/defaultAvatarWoman.png")" alt="User avatar" style="width: 100%; height: 80%" />
+            }
+        }
+        <br />
+        <div style="border-top: 1px solid black; background-color: aliceblue; padding: 10px 15px 20px 15px;">
+
+            @if ((isOwner == true) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("nazwisko")).RuleLevel == 3) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("nazwisko")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("nazwisko")).RuleLevel == 1 && isFriend))
+            {
+                <div style="margin-top: 10px;">
+                    <div style="font-size: small">
+                        Imię:
+                    </div>
+                    <div style="font-weight: bold; font-size: larger">
+                        @Model.UserWhomSomeoneVisits.Name
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <div style="font-size: small">
+                        Nazwisko:
+                    </div>
+                    <div style="font-weight: bold; font-size: larger">
+                        @Model.UserWhomSomeoneVisits.Surname
+                    </div>
+                </div>
+            }
+
+            @if ((isOwner == true) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("urodzenia")).RuleLevel == 3) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("urodzenia")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+             (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("urodzenia")).RuleLevel == 1 && isFriend))
+            {
+                <div style="margin-top: 10px;">
+                    <div style="font-size: small">
+                        Data urodzenia:
+                    </div>
+                    <div style="font-weight: bold; font-size: larger">
+                        @Model.UserWhomSomeoneVisits.Birthday.ToShortDateString()
+                    </div>
+                </div>
+            }
+            <div style="margin-top: 10px;">
+                Lista znajomych (@Model.UserFriendsIndex.Count)
+            </div>
+
+        </div>
+        @if (isFriend == false && isOwner == false)
+        {
+            <div class="btn btn-success" style="width: 100%;">
+                Zaproś do znajomych
+            </div>
+        }
+    </div>
+    <div style="width: 80%; float: left; padding: 0px 30px;">
+        <div style="border-bottom: 1px solid grey; font-size: 30px; color: darkgoldenrod">
+            @{ @Model.UserWhomSomeoneVisits.Login }
+            @if (Model.UserWhomSomeoneVisits.Sex == "Male")
+            {
+                <i class="fa fa-mars"></i>
+            }
+            else
+            {
+                <i class="fa fa-venus"></i>
+            }
+        </div>
+        @if ((isOwner == true) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("mail")).RuleLevel == 3) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("mail")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("mail")).RuleLevel == 1 && isFriend))
+        {
+            <div class="text-right">
+                @Model.UserWhomSomeoneVisits.Email
+            </div>
+        }
+
+        @if ((isOwner == true) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ocenionych")).RuleLevel == 3) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ocenionych")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ocenionych")).RuleLevel == 1 && isFriend))
+        {
+            <div style="margin: 30px 15px 0px 15px;">
+                <div>Ostatnio ocenione:</div>
+            
+                @{
+                    for (int i = 0; i < 6; i++)
+                    {
+                        <div style="width: 16.5%; height: 150px; border: 1px solid black; float: left;">
+                            <div style="width: 100%; height: 80%; background-color: gray;"></div>
+                            <div class="text-center">Tytuł</div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div style="margin: 30px 15px 0px 15px;">
+                <div>Najlepiej ocenione:</div>
+            
+                @{
+                    for (int i = 0; i < 6; i++)
+                    {
+                        <div style="width: 16.5%; height: 150px; border: 1px solid black; float: left;">
+                            <div style="width: 100%; height: 80%; background-color: gray;"></div>
+                            <div class="text-center">Tytuł</div>
+                        </div>
+                    }
+                }
+            </div>
+         }
+
+        @if ((isOwner == true) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ulubionych")).RuleLevel == 3) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ulubionych")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("ulubionych")).RuleLevel == 1 && isFriend))
+        {
+        <div style="margin: 30px 15px 0px 15px">
+            <div>Ulubione:</div>
+            
+            @{
+                for (int i = 0; i < 6; i++)
+                {
+                    <div style="width: 16.5%; height: 150px; border: 1px solid black; float: left;">
+                        <div style="width: 100%; height: 80%; background-color: gray;"></div>
+                        <div class="text-center">Tytuł</div>
+                    </div>
+                }
+            }
+        </div>
+        }
+
+        @if ((isOwner == true) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("interesujących")).RuleLevel == 3) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("interesujących")).RuleLevel == 2 && Session["loggedUser"] != null) ||
+         (Model.UserPrivacyPolicy.FirstOrDefault(p => p.RuleDescription.Contains("interesujących")).RuleLevel == 1 && isFriend))
+        {
+        <div style="margin: 30px 15px 0px 15px;">
+            <div> Do zagrania:</div>
+            
+            @{
+                for (int i = 0; i < 6; i++)
+                {
+                    <div style="width: 16.5%; height: 150px; border: 1px solid black; float: left;">
+                        <div style="width: 100%; height: 80%; background-color: gray;"></div>
+                        <div class="text-center">Tytuł</div>
+                    </div>
+                }
+            }
+        </div>
+        }
+
+    </div>
+</div>

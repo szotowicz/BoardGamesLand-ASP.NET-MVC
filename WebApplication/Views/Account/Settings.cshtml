@@ -1,0 +1,124 @@
+﻿@using WebApplication.Models;
+@model UserProfileSettings
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@{
+    ViewBag.Title = "Ustawienia";
+}
+
+<h2>Ustawienia profilu</h2>
+
+<div style="width: 90%; height: 850px; margin: 50px auto;">
+    <div style="width: 20%; border: 1px solid black; float: left; min-width: 150px;">
+        @if (Model.UserInformation.Avatar != null)
+        {
+            <img src="@Url.Content(Model.UserInformation.Avatar)" alt="User avatar" style="width: 100%; height: 80%" />
+        }
+        else
+        {
+            if (Model.UserInformation.Sex == "Male")
+            {
+                <img src="@Url.Content("~/Uploads/defaultAvatarMan.png")" alt="User avatar" style="width: 100%; height: 80%" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Uploads/defaultAvatarWoman.png")" alt="User avatar" style="width: 100%; height: 80%" />
+            }
+        }
+
+        <div class="btn btn-default" style="width: 100%;">
+            Aktualizuj fotografię
+        </div>
+    </div>
+    <div style="width: 80%; float: left; padding: 0px 30px;">
+        <div style="border-bottom: 1px solid grey; font-size: 30px; color: darkgoldenrod">
+            @{ @Model.UserInformation.Login }
+            @if (Model.UserInformation.Sex == "Male")
+            {
+                <i class="fa fa-mars"></i>
+            }
+            else
+            {
+                <i class="fa fa-venus"></i>
+            }
+        </div>
+        <div class="text-right">
+            @Model.UserInformation.Email
+        </div>
+
+        <div style="margin: 10px auto; width: 80%;">
+            <div style="float:left; width: 45%; padding: 2%;">
+                Imię: @Html.TextBoxFor(model => model.UserInformation.Name, new { @Value = @Model.UserInformation.Name, placeholder = "Imię", @class = "form-control" })
+            </div>
+            <div style="float: left; width: 45%; padding: 2%;">
+                Nazwisko: @Html.TextBoxFor(model => model.UserInformation.Surname, new { @Value = @Model.UserInformation.Surname, placeholder = "Nazwisko", @class = "form-control" })
+            </div>
+            <div style="float: left; width: 45%; padding: 2%;">
+                Data urodzenia: @Html.TextBoxFor(model => model.UserInformation.Birthday, new { @Value = @Model.UserInformation.Birthday.ToShortDateString(), @class = "form-control" })
+            </div>
+            <div style="float: left; width: 45%; padding: 2%;">
+                <input type="submit" class="btn btn-success btn-group-justified" style="margin: 20px auto auto 25%; width: 50%; min-width: 110px;" value="Zapisz zmiany">
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 100%; float: left; margin: 60px auto 30px auto;">
+        <div style="font-size: 20px; font-weight: bold; color: dimgrey;">
+            Ustawienia prywatności:
+        </div>
+        <br />
+        <table class="table  table-responsive  table-bordered" style="width: 100%; text-align: center">
+            <tr>
+                <th> </th>
+                <th style="text-align: center; width: 10%;">Wszystkim</th>
+                <th style="text-align: center; width: 10%;">Wszystkim użytkownikom</th>
+                <th style="text-align: center; width: 10%;">Znajomym</th>
+                <th style="text-align: center; width: 10%;">Nikomu</th>
+            </tr>
+
+            @foreach (var rule in Model.UserPrivacyPolicy)
+            {
+                using (@Html.BeginForm("Settings", "Account", FormMethod.Post))
+                {
+                    <tr>
+                        <td>@rule.RuleDescription</td>
+                        @if (@rule.RuleLevel == 0)
+                        {
+                            <td>@Html.RadioButtonFor(model => rule, "3")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "2")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "1")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "0", new { @checked = "checked" })</td>
+                        }
+                        else if (@rule.RuleLevel == 1)
+                        {
+                            <td>@Html.RadioButtonFor(model => rule, "3")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "2")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "1", new { @checked = "checked" })</td>
+                            <td>@Html.RadioButtonFor(model => rule, "0")</td>
+                        }
+                        else if (@rule.RuleLevel == 2)
+                        {
+                            <td>@Html.RadioButtonFor(model => rule, "3")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "2", new { @checked = "checked" })</td>
+                            <td>@Html.RadioButtonFor(model => rule, "1")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "0")</td>
+                        }
+                        else
+                        {
+                            <td>@Html.RadioButtonFor(model => rule, "3", new { @checked = "checked" })</td>
+                            <td>@Html.RadioButtonFor(model => rule, "2")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "1")</td>
+                            <td>@Html.RadioButtonFor(model => rule, "0")</td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+
+        <div class="btn btn-default" style="float: left">
+            @Html.ActionLink("Zmień hasło", "ChangePassword", "Account")
+        </div>
+
+        <input type="submit" class="btn btn-success" style="float: right" value="Zapisz zmiany">
+    </div>
+</div>

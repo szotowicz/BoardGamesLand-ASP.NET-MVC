@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8d4f7c0380ad4e20bf7bbef487033786" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="BoardGamesDBModel.AvarageGamesRating" Width="1.5" PointX="9.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.CommentsOfGames" Width="1.5" PointX="5.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Games" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.IndividualGamesRating" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.PhotosOfGames" Width="1.5" PointX="10.125" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Users" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__AvarageGa__GameI__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CommentsO__Owner__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CommentsO__Paren__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CommentsO__Targe__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Games__PageCreat__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Individua__GameI__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__PhotosOfG__Targe__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Individua__UserI__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__PhotosOfG__Uploa__2D27B809" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.UsersPrivacyPolicy" Width="1.5" PointX="3.625" PointY="7.625" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.UsersPrivacyPolicyList" Width="1.5" PointX="3.625" PointY="4.875" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__UsersPriv__UserI__6754599E" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__UsersPriv__RuleI__68487DD7" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Categories" Width="1.5" PointX="8.25" PointY="8.625" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.CategoriesOfGames" Width="1.5" PointX="8.125" PointY="11.5" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Creators" Width="1.5" PointX="7.5" PointY="22.375" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.CreatorsCategories" Width="1.5" PointX="11" PointY="18" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.CreatorsOfGames" Width="1.5" PointX="7.625" PointY="17.75" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Friendship" Width="1.5" PointX="0.875" PointY="5.125" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.GamesOfPublisher" Width="1.5" PointX="3" PointY="19" />
+        <EntityTypeShape EntityType="BoardGamesDBModel.Publishers" Width="1.5" PointX="3" PointY="14.5" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Categorie__Categ__03F0984C" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Categorie__GameI__02FC7413" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Creators__PageCr__06CD04F7" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CreatorsO__Creat__0C85DE4D" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CreatorsO__Categ__0D7A0286" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__CreatorsO__GameI__0B91BA14" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Friendshi__Frien__76969D2E" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Friendshi__Frien__778AC167" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Games__Producent__7D439ABD" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__GamesOfPu__GameI__10566F31" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__GamesOfPu__Produ__114A936A" />
+        <AssociationConnector Association="BoardGamesDBModel.FK__Publisher__PageC__7A672E12" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
